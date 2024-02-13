@@ -22,6 +22,31 @@ export const MainPage: React.FC = () => {
         setData(res.data.items);
       })
       .finally(() => setLoading(false));
+
+    // const testPromiseAll = await Promise.all([
+    //   octokit.request("GET /search/repositories?q=A").then((res) => res.data),
+    //   octokit.request("GET /search/repositories?q=B").then((res) => res.data),
+    // ]);
+
+    // const testPromiseAllSettled = await Promise.allSettled([
+    //     octokit.request("GET /search/repositories?q=A").then((res) => res.data),
+    //     octokit.request("GET /search/repositories?q=B").then((res) => res.data),
+    //   ]);
+
+    //   const testPromiseRace= await Promise.race([
+    //     octokit.request("GET /search/repositories?q=A").then((res) => res.data),
+    //     octokit.request("GET /search/repositories?q=B").then((res) => res.data),
+    //   ]);
+
+    const testPromiseAny = await Promise.any([
+      octokit.request("GET /search/repositories?q=A").then((res) => res.data),
+      octokit.request("GET /search/repositories?q=B").then((res) => res.data),
+    ]);
+
+    // console.log('promise all', testPromiseAll);
+    // console.log('promise all settled', testPromiseAllSettled);
+    // console.log('promise race', testPromiseRace);
+    console.log("promise any", testPromiseAny);
   };
 
   return (
