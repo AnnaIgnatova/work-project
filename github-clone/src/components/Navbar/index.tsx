@@ -1,15 +1,25 @@
 import { useState } from "react";
 import styles from "./style.module.scss";
 import { LeftOutlined, RightSquareOutlined } from "@ant-design/icons";
-import { Select } from "antd";
+import { Button, Input } from "antd";
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  setFollowersCount: (value: number) => void;
+  setSearchName: (value: string) => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({
+  setFollowersCount,
+  setSearchName,
+}) => {
   const [showNavbar, setShowNavbar] = useState<boolean>(true);
-
+  const [name, setName] = useState<string>("");
+  const [followers, setFollowers] = useState<number>(0);
   const toggleNavbar = () => setShowNavbar(!showNavbar);
 
-  const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
+  const onSubmit = () => {
+    setSearchName(name);
+    setFollowersCount(followers);
   };
 
   return (
@@ -34,36 +44,24 @@ export const Navbar: React.FC = () => {
         )}
       </div>
       <div className={styles["navbar__container"]}>
-        <Select
-          defaultValue="value2"
-          onChange={handleChange}
-          options={[
-            { value: "value1", label: "value1" },
-            { value: "value2", label: "value2" },
-            { value: "value3", label: "value3" },
-            { value: "value4", label: "value4", disabled: true },
-          ]}
-        />
-        <Select
-          defaultValue="value1"
-          onChange={handleChange}
-          options={[
-            { value: "value1", label: "value1" },
-            { value: "value2", label: "value2" },
-            { value: "value3", label: "value3" },
-            { value: "value4", label: "value4", disabled: true },
-          ]}
-        />
-        <Select
-          defaultValue="value3"
-          onChange={handleChange}
-          options={[
-            { value: "value1", label: "value1" },
-            { value: "value2", label: "value2" },
-            { value: "value3", label: "value3" },
-            { value: "value4", label: "value4", disabled: true },
-          ]}
-        />
+        <label>
+          Name
+          <Input
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+        <label>
+          Followers from
+          <Input
+            type="number"
+            value={followers}
+            onChange={(e) => setFollowers(+e.target.value)}
+          />
+        </label>
+
+        <Button onClick={onSubmit}>Найти</Button>
       </div>
     </div>
   );
