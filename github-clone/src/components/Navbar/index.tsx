@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./style.module.scss";
-import { LeftSquareOutlined, RightSquareOutlined } from "@ant-design/icons";
+import { LeftOutlined, RightSquareOutlined } from "@ant-design/icons";
 import { Select } from "antd";
 
 export const Navbar: React.FC = () => {
@@ -14,23 +14,28 @@ export const Navbar: React.FC = () => {
 
   return (
     <div className={`${styles.navbar} ${!showNavbar ? "hidden" : ""}`}>
-      <div className={styles["navbar__header"]}>
-        <h3 className={styles["navbar__header__title"]}>Filters</h3>
+      {!showNavbar && (
         <button
-          className={styles["navbar__header__button"]}
+          className={`${styles["navbar__header__button"]} ${styles["navbar__header__button_show"]}`}
           onClick={toggleNavbar}
         >
-          {showNavbar ? (
-            <LeftSquareOutlined style={{ fontSize: "34px" }} />
-          ) : (
-            <RightSquareOutlined style={{ fontSize: "34px" }} />
-          )}
+          <RightSquareOutlined style={{ fontSize: "32px" }} />
         </button>
+      )}
+      <div className={styles["navbar__header"]}>
+        <h3 className={styles["navbar__header__title"]}>Filters</h3>
+        {showNavbar && (
+          <button
+            className={styles["navbar__header__button"]}
+            onClick={toggleNavbar}
+          >
+            <LeftOutlined style={{ fontSize: "24px" }} />
+          </button>
+        )}
       </div>
       <div className={styles["navbar__container"]}>
         <Select
           defaultValue="value2"
-          style={{ width: 120 }}
           onChange={handleChange}
           options={[
             { value: "value1", label: "value1" },
@@ -41,7 +46,6 @@ export const Navbar: React.FC = () => {
         />
         <Select
           defaultValue="value1"
-          style={{ width: 120 }}
           onChange={handleChange}
           options={[
             { value: "value1", label: "value1" },
@@ -52,7 +56,6 @@ export const Navbar: React.FC = () => {
         />
         <Select
           defaultValue="value3"
-          style={{ width: 120 }}
           onChange={handleChange}
           options={[
             { value: "value1", label: "value1" },
