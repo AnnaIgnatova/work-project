@@ -1,0 +1,42 @@
+.navbar {
+  background: var(--background-color-light);
+  width: 300px;
+  height: calc(100vh - 70px);
+  padding: 20px;
+  transition: all 0.5s;
+}
+
+.navbar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.navbar__header__title {
+  font-weight: normal;
+}
+
+.navbar__header__button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.navbar__header__button_show {
+  position: absolute;
+  right: -85px;
+  top: -4px;
+}
+
+:global(.hidden) {
+  transform: translate(-300px);
+}
+
+.navbar__container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 20vh;
+  justify-content: space-between;
+}
