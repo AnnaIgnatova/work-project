@@ -38,15 +38,15 @@ export const MainPage: React.FC = () => {
     //     octokit.request("GET /search/repositories?q=B").then((res) => res.data),
     //   ]);
 
-    const testPromiseAny = await Promise.any([
-      octokit.request("GET /search/repositories?q=A").then((res) => res.data),
-      octokit.request("GET /search/repositories?q=B").then((res) => res.data),
-    ]);
+    // const testPromiseAny = await Promise.any([
+    //   octokit.request("GET /search/repositories?q=A").then((res) => res.data),
+    //   octokit.request("GET /search/repositories?q=B").then((res) => res.data),
+    // ]);
 
     // console.log('promise all', testPromiseAll);
     // console.log('promise all settled', testPromiseAllSettled);
     // console.log('promise race', testPromiseRace);
-    console.log("promise any", testPromiseAny);
+    // console.log("promise any", testPromiseAny);
   };
 
   return (
