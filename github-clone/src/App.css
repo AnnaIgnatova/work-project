@@ -3,3 +3,9 @@
   height: 100vh;
   margin: 0 auto;
 }
+
+.container {
+  padding-top: 70px;
+  display: flex;
+  justify-content: center;
+}
