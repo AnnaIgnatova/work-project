@@ -1,26 +1,26 @@
 import { useState } from "react";
 import styles from "./style.module.scss";
+import { useUnit } from "effector-react";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
+import {
+  $followersMinCount,
+  $userName,
+  changeFollowersMinCount,
+  changeUserNameEvent,
+} from "../../store/filters";
+import { getUsersEvent } from "../../store/users";
 
-interface NavbarProps {
-  setFollowersCount: (value: number) => void;
-  setSearchName: (value: string) => void;
-}
-
-export const Navbar: React.FC<NavbarProps> = ({
-  setFollowersCount,
-  setSearchName,
-}) => {
+export const Navbar: React.FC = () => {
   const [showNavbar, setShowNavbar] = useState<boolean>(true);
-  const [name, setName] = useState<string>("");
-  const [followers, setFollowers] = useState<number>(0);
   const toggleNavbar = () => setShowNavbar(!showNavbar);
 
-  const onSubmit = () => {
-    setSearchName(name);
-    setFollowersCount(followers);
-  };
+  const [userName, followers, changeName, setFollowers] = useUnit([
+    $userName,
+    $followersMinCount,
+    changeUserNameEvent,
+    changeFollowersMinCount,
+  ]);
 
   return (
     <div className={styles.navbar}>
@@ -41,22 +41,14 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className={styles["navbar__container"]}>
           <label>
             Name
-            <Input
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <Input placeholder="Name" value={userName} onChange={changeName} />
           </label>
           <label>
             Followers from
-            <Input
-              type="number"
-              value={followers}
-              onChange={(e) => setFollowers(+e.target.value)}
-            />
+            <Input type="number" value={followers} onChange={setFollowers} />
           </label>
 
-          <Button onClick={onSubmit}>Найти</Button>
+          <Button onClick={getUsersEvent}>Найти</Button>
         </div>
       </div>
     </div>

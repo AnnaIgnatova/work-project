@@ -1,3 +1,8 @@
+export interface GetUsersRequest {
+  items: UserData[];
+  total_count: number;
+}
+
 export interface UserData {
   login: string;
   id: number;

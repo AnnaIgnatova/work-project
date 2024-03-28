@@ -1,7 +1,7 @@
 .navbar {
   background: var(--background-color-light);
   max-width: 250px;
-  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
   padding: 20px;
   transition: all 0.5s;
   position: relative;
