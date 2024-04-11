@@ -2,10 +2,12 @@ import { useState } from "react";
 import styles from "./style.module.scss";
 import { useUnit } from "effector-react";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import {
+  $createdBy,
   $followersMinCount,
   $userName,
+  changeDateCreatedBy,
   changeFollowersMinCount,
   changeUserNameEvent,
 } from "../../store/filters";
@@ -15,12 +17,15 @@ export const Navbar: React.FC = () => {
   const [showNavbar, setShowNavbar] = useState<boolean>(true);
   const toggleNavbar = () => setShowNavbar(!showNavbar);
 
-  const [userName, followers, changeName, setFollowers] = useUnit([
-    $userName,
-    $followersMinCount,
-    changeUserNameEvent,
-    changeFollowersMinCount,
-  ]);
+  const [userName, followers, createdBy, changeName, setFollowers, changeDate] =
+    useUnit([
+      $userName,
+      $followersMinCount,
+      $createdBy,
+      changeUserNameEvent,
+      changeFollowersMinCount,
+      changeDateCreatedBy,
+    ]);
 
   return (
     <div className={styles.navbar}>
@@ -38,18 +43,27 @@ export const Navbar: React.FC = () => {
         <div className={styles["navbar__header"]}>
           <h3 className={styles["navbar__header__title"]}>Filters</h3>
         </div>
-        <div className={styles["navbar__container"]}>
-          <label>
-            Name
-            <Input placeholder="Name" value={userName} onChange={changeName} />
-          </label>
-          <label>
-            Followers from
-            <Input type="number" value={followers} onChange={setFollowers} />
-          </label>
+        <Form.Item label="Name">
+          <Input placeholder="Name" value={userName} onChange={changeName} />
+        </Form.Item>
+        <Form.Item label="Followers count from">
+          <Input
+            type="number"
+            placeholder="Followers count from"
+            value={followers}
+            onChange={setFollowers}
+          />
+        </Form.Item>
+        <Form.Item label="Created by">
+          <Input
+            placeholder="Created by"
+            type="date"
+            value={createdBy}
+            onChange={changeDate}
+          />
+        </Form.Item>
 
-          <Button onClick={getUsersEvent}>Найти</Button>
-        </div>
+        <Button onClick={getUsersEvent}>Найти</Button>
       </div>
     </div>
   );

@@ -6,13 +6,11 @@ import { Table, Pagination } from "antd";
 import { Loader } from "../../components/Loader";
 import { Navbar } from "../../components/Navbar";
 
-import { $users, Gate, searchUsersFx } from "../../store/users";
+import { $users, Gate, handlePageEvent, searchUsersFx } from "../../store/users";
 import { UserData } from "../../store/users/types";
 
 import styles from "./style.module.scss";
-import { handlePageEvent } from "../../store/pagination";
 
-// вопрос: куда переместить структуру
 const columns = [
   {
     title: "ID",
@@ -40,7 +38,7 @@ const columns = [
 
 export const MainPage: React.FC = () => {
   const navigate = useNavigate();
-  const [users, isLoading] = useUnit([$users, searchUsersFx.pending]);
+  const [users, isLoading, handlePage2] = useUnit([$users, searchUsersFx.pending, handlePageEvent]);
   const [currentPage, setCurrentPage] = useState(0);
 
   const rowHandler = (login: string) => () => {
@@ -49,7 +47,7 @@ export const MainPage: React.FC = () => {
 
   const handlePage = (page: number) => {
     setCurrentPage(page);
-    handlePageEvent(page);
+    handlePage2(page);
   };
 
   return (

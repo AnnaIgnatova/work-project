@@ -1,43 +1,56 @@
-import { useEffect, useState } from "react";
-import { octokit } from "../../api/octokit";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Descriptions, DescriptionsProps } from "antd";
+import { Descriptions } from "antd";
 import { Loader } from "../../components/Loader";
+import { UserData } from "../../store/users/types";
+import { BackButton } from "../../components/BackButton";
+import { useUnit } from "effector-react";
+import { $userData, getUserEvent, getUserFx } from "../../store/user";
+import styles from "./style.module.scss";
+import Title from "antd/es/typography/Title";
 
 export const UserPage: React.FC = () => {
   const { user } = useParams();
-  const [userData, setUserData] = useState<
-    DescriptionsProps["items"] | undefined
-  >([]);
-  const [isLoading, setLoading] = useState<boolean>(true);
+  const [userData, getUser, isLoading] = useUnit([
+    $userData,
+    getUserEvent,
+    getUserFx.pending,
+  ]);
 
   useEffect(() => {
-    const getUser = () => {
-      setLoading(true);
-      octokit
-        .request(`GET /users/${user}`)
-        .then((res) => {
-          console.log(res.data);
-          const data: Record<string, string> = res.data;
-          const items = Object.entries(data).map(([key, value]) => ({
-            key,
-            label: key,
-            children: value,
-          }));
-          setUserData(items);
-        })
-        .finally(() => setLoading(false));
-    };
+    getUser({ user });
+  }, [user, getUser]);
 
-    getUser();
-  }, [user]);
+  const getDescriptionData = (userData: UserData | null) =>
+    userData
+      ? Object.entries(userData).map(([key, value]) => ({
+          key,
+          label: key,
+          children: value,
+        }))
+      : [];
 
   return (
     <>
       {isLoading ? (
         <Loader />
       ) : (
-        <Descriptions title="User Info" items={userData} bordered />
+        <div className={styles.container}>
+          <BackButton />
+          <img
+            src={userData?.avatar_url}
+            alt={userData?.login}
+            className={styles["user__image"]}
+          />
+          <Title level={3}>
+            Hello, my name is {userData?.login}. Here some information about me
+          </Title>
+          <Descriptions
+            layout="vertical"
+            items={getDescriptionData(userData)}
+            bordered
+          />
+        </div>
       )}
     </>
   );
