@@ -44,11 +44,17 @@ export const Navbar: React.FC = () => {
           <h3 className={styles["navbar__header__title"]}>Filters</h3>
         </div>
         <Form.Item label="Name">
-          <Input placeholder="Name" value={userName} onChange={changeName} />
+          <Input
+            placeholder="Name"
+            aria-label="name-input"
+            value={userName}
+            onChange={changeName}
+          />
         </Form.Item>
         <Form.Item label="Followers count from">
           <Input
             type="number"
+            aria-label="followers-input"
             placeholder="Followers count from"
             value={followers}
             onChange={setFollowers}
@@ -57,6 +63,7 @@ export const Navbar: React.FC = () => {
         <Form.Item label="Created by">
           <Input
             placeholder="Created by"
+            aria-label="date-input"
             type="date"
             value={createdBy}
             onChange={changeDate}
