@@ -1,16 +1,18 @@
 .navbar {
   background: var(--background-color-light);
-  width: 300px;
-  height: calc(100vh - 70px);
+  max-width: 250px;
+  min-height: calc(100vh - 70px);
   padding: 20px;
   transition: all 0.5s;
+  position: relative;
+  padding-right: 50px;
 }
 
 .navbar__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+  margin-bottom: 25px;
 }
 
 .navbar__header__title {
@@ -21,16 +23,13 @@
   border: none;
   cursor: pointer;
   background-color: transparent;
-}
-
-.navbar__header__button_show {
   position: absolute;
-  right: -85px;
-  top: -4px;
+  right: 10px;
+  top: 10px;
 }
 
 :global(.hidden) {
-  transform: translate(-300px);
+  display: none;
 }
 
 .navbar__container {

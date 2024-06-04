@@ -4,6 +4,7 @@ import { NotFoundPage } from "./pages/NotFound";
 import { Header } from "./components/Header";
 import { UserPage } from "./pages/User";
 import "./App.css";
+import { CounterPage } from "./pages/Counter";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/counter" element={<CounterPage />} />
           <Route path="/:user" element={<UserPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
