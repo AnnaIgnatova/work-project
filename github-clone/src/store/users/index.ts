@@ -22,18 +22,22 @@ export interface SearchUsersParams {
 
 export const searchUsersFx = createEffect(
   async (params?: SearchUsersParams) => {
-    const { searchName, followersCount, createdBy, page } = params || {};
-    const res = await octokit.request(
-      `GET /search/users?q=${
-        searchName?.length ? `${searchName}+in%3Alogin+` : ""
-      }${followersCount ? `followers:>${followersCount}` : ""}+${
-        createdBy ? `created:>${createdBy}` : "created:>2011-01-01"
-      }`,
-      {
-        page,
-      }
-    );
-    return res.data;
+    try {
+      const { searchName, followersCount, createdBy, page } = params || {};
+      const res = await octokit.request(
+        `GET /search/users?q=${
+          searchName?.length ? `${searchName}+in%3Alogin+` : ""
+        }${followersCount ? `followers:>${followersCount}` : ""}+${
+          createdBy ? `created:>${createdBy}` : "created:>2011-01-01"
+        }`,
+        {
+          page,
+        }
+      );
+      return res.data;
+    } catch (e) {
+      return e;
+    }
   }
 );
 

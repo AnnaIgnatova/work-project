@@ -1,59 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUnit } from "effector-react";
-import { Table, Pagination } from "antd";
+import { Table, Pagination, message } from "antd";
 
 import { Loader } from "../../components/Loader";
 import { Navbar } from "../../components/Navbar";
 
-import { $users, Gate, handlePageEvent, searchUsersFx } from "../../store/users";
-import { UserData } from "../../store/users/types";
-
+import {
+  $responseUser,
+  $users,
+  Gate,
+  handlePageEvent,
+  searchUsersFx,
+} from "../../store/users";
 import styles from "./style.module.scss";
-
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    sorter: (a: UserData, b: UserData) => a.id - b.id,
-  },
-  {
-    title: "Login",
-    dataIndex: "login",
-    key: "login",
-  },
-  {
-    title: "Score",
-    dataIndex: "score",
-    key: "score",
-    sorter: (a: UserData, b: UserData) => a.score - b.score,
-  },
-  {
-    title: "Repositories",
-    dataIndex: "repos_url",
-    key: "repos_url",
-  },
-];
+import { columns } from "./constants/columnsData";
 
 export const MainPage: React.FC = () => {
   const navigate = useNavigate();
-  const [users, isLoading, handlePage2] = useUnit([$users, searchUsersFx.pending, handlePageEvent]);
+  const [users, responseUser, isLoading, handlePage] = useUnit([
+    $users,
+    $responseUser,
+    searchUsersFx.pending,
+    handlePageEvent,
+  ]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [messageApi, contextHolder] = message.useMessage();
+
+  useEffect(() => {
+    if (responseUser.message) {
+      messageApi.open({
+        type: "error",
+        content: responseUser.message,
+      });
+    }
+  }, [responseUser]);
 
   const rowHandler = (login: string) => () => {
     navigate(`/${login}`);
   };
 
-  const handlePage = (page: number) => {
+  const onChangePage = (page: number) => {
     setCurrentPage(page);
-    handlePage2(page);
+    handlePage(page);
   };
 
   return (
     <>
+      {contextHolder}
       <Gate />
-      <Navbar />
+      <Navbar isLoading={isLoading} />
       <div className={styles["main__content"]}>
         {isLoading ? (
           <Loader />
@@ -71,7 +67,7 @@ export const MainPage: React.FC = () => {
             />
             <Pagination
               className={styles["main__pagination"]}
-              onChange={handlePage}
+              onChange={onChangePage}
               total={1000}
               current={currentPage}
               pageSize={30}
