@@ -1,25 +1,20 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useUnit } from "effector-react";
-import { Table, Pagination, message } from "antd";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {useUnit} from "effector-react";
+import {Table, Pagination, message} from "antd";
 
-import { Loader } from "../../components/Loader";
-import { Navbar } from "../../components/Navbar";
+import {Loader} from "../../components/Loader";
+import {Navbar} from "../../components/Navbar";
 
-import {
-  $responseUser,
-  $users,
-  Gate,
-  handlePageEvent,
-  searchUsersFx,
-} from "../../store/users";
+import {$responseUser, $users, $usersCount, Gate, handlePageEvent, searchUsersFx} from "../../store/users";
 import styles from "./style.module.scss";
-import { columns } from "./constants/columnsData";
+import {columns} from "./constants/columnsData";
 
 export const MainPage: React.FC = () => {
   const navigate = useNavigate();
-  const [users, responseUser, isLoading, handlePage] = useUnit([
+  const [users, usersCount, responseUser, isLoading, handlePage] = useUnit([
     $users,
+    $usersCount,
     $responseUser,
     searchUsersFx.pending,
     handlePageEvent,
@@ -58,17 +53,18 @@ export const MainPage: React.FC = () => {
             <Table
               dataSource={users}
               className={styles["main__table"]}
-              scroll={{ x: true }}
+              scroll={{x: true}}
               columns={columns}
-              onRow={({ login }) => ({
+              onRow={({login}) => ({
                 onClick: rowHandler(login),
               })}
               pagination={false}
             />
             <Pagination
+              showSizeChanger={false}
               className={styles["main__pagination"]}
               onChange={onChangePage}
-              total={1000}
+              total={Math.min(usersCount, 1000)}
               current={currentPage}
               pageSize={30}
             />
