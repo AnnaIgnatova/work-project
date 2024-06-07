@@ -1,11 +1,16 @@
 import {render} from "@testing-library/react";
-import App from "../../../App";
 import {columns} from "../constants/columnsData";
 import {Table} from "antd";
+import {MainPage} from "..";
+import {BrowserRouter} from "react-router-dom";
 
 describe("Main Page", () => {
   beforeEach(() => {
-    render(<App />);
+    render(
+      <BrowserRouter>
+        <MainPage />
+      </BrowserRouter>
+    );
   });
 
   it("render table row", () => {

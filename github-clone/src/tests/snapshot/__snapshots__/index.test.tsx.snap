@@ -14,6 +14,12 @@ exports[`snapshot tests > renders back button correctly 1`] = `
 </button>
 `;
 
+exports[`snapshot tests > renders header correctly 1`] = `
+<header
+  className="ant-layout-header css-dev-only-do-not-override-1b0bdye"
+/>
+`;
+
 exports[`snapshot tests > renders navbar correctly 1`] = `
 <div
   className="_navbar_c18934"

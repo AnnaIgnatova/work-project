@@ -1,10 +1,6 @@
-import {fireEvent, render, screen} from "@testing-library/react";
-import { Navbar } from "..";
+import {fireEvent, screen} from "@testing-library/react";
 
-describe("Navbar actions", () => {
-  beforeEach(() => {
-    render(<Navbar isLoading={false} />);
-  });
+describe("Header renders", () => {
 
   it("type name in input", () => {
     const input: HTMLInputElement = screen.getByLabelText("name-input");

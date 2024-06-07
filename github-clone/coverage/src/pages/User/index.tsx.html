@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.22% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>52/57</span>
+                <span class='fraction'>48/60</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/9</span>
+                <span class='fraction'>6/15</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.22% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>52/57</span>
+                <span class='fraction'>48/60</span>
             </div>
         
             
@@ -120,7 +120,10 @@
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a>
 <a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -132,9 +135,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -150,11 +150,21 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -165,43 +175,45 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Descriptions } from "antd";
-import { Loader } from "../../components/Loader";
-import { UserData } from "../../store/users/types";
-import { BackButton } from "../../components/BackButton";
-import { useUnit } from "effector-react";
-import { $userData, getUserEvent, getUserFx } from "../../store/user";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {useEffect} from "react";
+import {useParams} from "react-router-dom";
+import {Descriptions, message} from "antd";
+import {Loader} from "../../components/Loader";
+import {UserData} from "../../store/users/types";
+import {BackButton} from "../../components/BackButton";
+import {useUnit} from "effector-react";
+import {$userData, getUserEvent, getUserFx} from "../../store/user";
 import styles from "./style.module.scss";
 import Title from "antd/es/typography/Title";
 &nbsp;
 export const UserPage: React.FC = () =&gt; {
-  const { user } = useParams();
-  const [userData, getUser, isLoading] = useUnit([
-    $userData,
-    getUserEvent,
-    getUserFx.pending,
-  ]);
+  const {user} = useParams();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [userData, getUser, isLoading] = useUnit([$userData, getUserEvent, getUserFx.pending]);
 &nbsp;
   useEffect(() =&gt; {
-    getUser({ user });
+    getUser({user});
   }, [user, getUser]);
 &nbsp;
+  useEffect(() =&gt; {
+    if (<span class="branch-0 cbranch-no" title="branch not covered" >userData?.message) <span class="branch-0 cbranch-no" title="branch not covered" >{</span></span>
+<span class="cstat-no" title="statement not covered" >      messageApi.open({</span>
+<span class="cstat-no" title="statement not covered" >        type: "error",</span>
+<span class="cstat-no" title="statement not covered" >        content: userData?.message,</span>
+<span class="cstat-no" title="statement not covered" >      });</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+  }, [userData]);
+&nbsp;
   const getDescriptionData = (userData: UserData | null) =&gt;
-<span class="branch-0 cbranch-no" title="branch not covered" >    userData</span>
+<span class="branch-0 cbranch-no" title="branch not covered" >    userData &amp;&amp; !userData?.<span class="branch-0 cbranch-no" title="branch not covered" >message</span></span>
 <span class="cstat-no" title="statement not covered" >      ? Object.entries(userData).map(([key, value]) =&gt; ({</span>
 <span class="cstat-no" title="statement not covered" >          key,</span>
 <span class="cstat-no" title="statement not covered" >          label: key,</span>
@@ -211,24 +223,21 @@ export const UserPage: React.FC = () =&gt; {
 &nbsp;
   return (
     &lt;&gt;
+      {contextHolder}
       {isLoading ? (
         &lt;Loader /&gt;
       ) : (
         &lt;div className={styles.container}&gt;
           &lt;BackButton /&gt;
-          &lt;img
-            src={<span class="branch-0 cbranch-no" title="branch not covered" >userData?.avatar_url}</span>
-            alt={<span class="branch-0 cbranch-no" title="branch not covered" >userData?.login}</span>
-            className={styles["user__image"]}
-          /&gt;
-          &lt;Title level={3}&gt;
-            Hello, my name is {<span class="branch-0 cbranch-no" title="branch not covered" >userData?.login}.</span> Here some information about me
-          &lt;/Title&gt;
-          &lt;Descriptions
-            layout="vertical"
-            items={getDescriptionData(userData)}
-            bordered
-          /&gt;
+          {!<span class="branch-0 cbranch-no" title="branch not covered" >userData?.message ? (</span>
+            &lt;&gt;
+              &lt;img src={<span class="branch-0 cbranch-no" title="branch not covered" >userData?.avatar_url} a</span>lt={<span class="branch-0 cbranch-no" title="branch not covered" >userData?.login} c</span>lassName={styles["user__image"]} /&gt;
+              &lt;Title level={3}&gt;Hello, my name is {<span class="branch-0 cbranch-no" title="branch not covered" >userData?.login}.</span> Here some information about me&lt;/Title&gt;
+              &lt;Descriptions layout="vertical" items={getDescriptionData(userData)} bordered /&gt;
+<span class="branch-0 cbranch-no" title="branch not covered" >            &lt;/&gt;</span>
+<span class="cstat-no" title="statement not covered" >          ) : (</span>
+<span class="cstat-no" title="statement not covered" >            &lt;&gt;User not found&lt;/&gt;</span>
+          )}
         &lt;/div&gt;
       )}
     &lt;/&gt;
@@ -241,7 +250,7 @@ export const UserPage: React.FC = () =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-05T06:12:11.270Z
+                at 2024-06-06T08:20:35.770Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -24,3 +24,10 @@ export interface UserData {
   site_admin: boolean;
   score: number;
 }
+
+export interface SearchUsersParams {
+  searchName?: string;
+  followersCount?: number;
+  page?: number;
+  createdBy?: string;
+}

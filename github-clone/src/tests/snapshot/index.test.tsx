@@ -1,9 +1,10 @@
-import { BrowserRouter } from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import renderer from "react-test-renderer";
-import { BackButton } from "../../components/BackButton";
-import { Navbar } from "../../components/Navbar";
-import { NotFoundPage } from "../../pages/NotFound";
-import { UserPage } from "../../pages/User";
+import {BackButton} from "../../components/BackButton";
+import {Navbar} from "../../components/Navbar";
+import {NotFoundPage} from "../../pages/NotFound";
+import {UserPage} from "../../pages/User";
+import { Header } from "antd/es/layout/layout";
 
 describe("snapshot tests", () => {
   it("renders back button correctly", () => {
@@ -30,6 +31,14 @@ describe("snapshot tests", () => {
         <BrowserRouter>
           <UserPage />
         </BrowserRouter>
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+  it("renders header correctly", () => {
+    const tree = renderer
+      .create(
+        <Header />
       )
       .toJSON();
     expect(tree).toMatchSnapshot();

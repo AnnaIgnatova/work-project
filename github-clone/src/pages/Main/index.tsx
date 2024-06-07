@@ -1,35 +1,30 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useUnit} from "effector-react";
-import {Table, Pagination, message} from "antd";
+import {Table, Pagination} from "antd";
 
 import {Loader} from "../../components/Loader";
 import {Navbar} from "../../components/Navbar";
 
-import {$responseUser, $users, $usersCount, Gate, handlePageEvent, searchUsersFx} from "../../store/users";
+import {$users, $usersCount, $usersGetStatus, Gate, handlePageEvent} from "../../store/users";
 import styles from "./style.module.scss";
 import {columns} from "./constants/columnsData";
+import {useNotification} from "../../hooks/useNotification";
 
 export const MainPage: React.FC = () => {
   const navigate = useNavigate();
-  const [users, usersCount, responseUser, isLoading, handlePage] = useUnit([
+  const [users, usersCount, {loading, error}, handlePage] = useUnit([
     $users,
     $usersCount,
-    $responseUser,
-    searchUsersFx.pending,
+    $usersGetStatus,
     handlePageEvent,
   ]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [messageApi, contextHolder] = message.useMessage();
+  const {contextHolder, setMessageData} = useNotification(error);
 
   useEffect(() => {
-    if (responseUser.message) {
-      messageApi.open({
-        type: "error",
-        content: responseUser.message,
-      });
-    }
-  }, [responseUser]);
+    setMessageData(error);
+  }, [error]);
 
   const rowHandler = (login: string) => () => {
     navigate(`/${login}`);
@@ -44,9 +39,9 @@ export const MainPage: React.FC = () => {
     <>
       {contextHolder}
       <Gate />
-      <Navbar isLoading={isLoading} />
+      <Navbar isLoading={loading} />
       <div className={styles["main__content"]}>
-        {isLoading ? (
+        {loading ? (
           <Loader />
         ) : (
           <div className={styles["main__table-container"]}>
