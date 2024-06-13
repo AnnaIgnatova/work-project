@@ -1,14 +1,20 @@
-.main__container {
-  padding-top: 70px;
-  display: flex;
-}
-
 .main__content {
   width: 100%;
+  overflow: auto;
+}
+
+.main__table-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 }
 
 .main__table {
   width: 100%;
+}
+
+.main__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 100px;
 }
