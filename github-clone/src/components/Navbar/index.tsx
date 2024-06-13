@@ -13,7 +13,11 @@ import {
 } from "../../store/filters";
 import { getUsersEvent } from "../../store/users";
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  isLoading: boolean;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ isLoading }) => {
   const [showNavbar, setShowNavbar] = useState<boolean>(true);
   const toggleNavbar = () => setShowNavbar(!showNavbar);
 
@@ -44,11 +48,19 @@ export const Navbar: React.FC = () => {
           <h3 className={styles["navbar__header__title"]}>Filters</h3>
         </div>
         <Form.Item label="Name">
-          <Input placeholder="Name" value={userName} onChange={changeName} />
+          <Input
+            disabled={isLoading}
+            placeholder="Name"
+            aria-label="name-input"
+            value={userName}
+            onChange={changeName}
+          />
         </Form.Item>
         <Form.Item label="Followers count from">
           <Input
+            disabled={isLoading}
             type="number"
+            aria-label="followers-input"
             placeholder="Followers count from"
             value={followers}
             onChange={setFollowers}
@@ -56,14 +68,18 @@ export const Navbar: React.FC = () => {
         </Form.Item>
         <Form.Item label="Created by">
           <Input
+            disabled={isLoading}
             placeholder="Created by"
+            aria-label="date-input"
             type="date"
             value={createdBy}
             onChange={changeDate}
           />
         </Form.Item>
 
-        <Button onClick={getUsersEvent}>Найти</Button>
+        <Button onClick={getUsersEvent} disabled={isLoading}>
+          Найти
+        </Button>
       </div>
     </div>
   );

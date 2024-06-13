@@ -1,78 +1,65 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useUnit } from "effector-react";
-import { Table, Pagination } from "antd";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {useUnit} from "effector-react";
+import {Table, Pagination} from "antd";
 
-import { Loader } from "../../components/Loader";
-import { Navbar } from "../../components/Navbar";
+import {Loader} from "../../components/Loader";
+import {Navbar} from "../../components/Navbar";
 
-import { $users, Gate, handlePageEvent, searchUsersFx } from "../../store/users";
-import { UserData } from "../../store/users/types";
-
+import {$users, $usersCount, $usersGetStatus, Gate, handlePageEvent} from "../../store/users";
 import styles from "./style.module.scss";
-
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-    sorter: (a: UserData, b: UserData) => a.id - b.id,
-  },
-  {
-    title: "Login",
-    dataIndex: "login",
-    key: "login",
-  },
-  {
-    title: "Score",
-    dataIndex: "score",
-    key: "score",
-    sorter: (a: UserData, b: UserData) => a.score - b.score,
-  },
-  {
-    title: "Repositories",
-    dataIndex: "repos_url",
-    key: "repos_url",
-  },
-];
+import {columns} from "./constants/columnsData";
+import {useNotification} from "../../hooks/useNotification";
 
 export const MainPage: React.FC = () => {
   const navigate = useNavigate();
-  const [users, isLoading, handlePage2] = useUnit([$users, searchUsersFx.pending, handlePageEvent]);
+  const [users, usersCount, {loading, error}, handlePage] = useUnit([
+    $users,
+    $usersCount,
+    $usersGetStatus,
+    handlePageEvent,
+  ]);
   const [currentPage, setCurrentPage] = useState(0);
+  const {contextHolder, setMessageData} = useNotification(error);
+
+  useEffect(() => {
+    setMessageData(error);
+  }, [error]);
 
   const rowHandler = (login: string) => () => {
     navigate(`/${login}`);
   };
 
-  const handlePage = (page: number) => {
+  const onChangePage = (page: number) => {
     setCurrentPage(page);
-    handlePage2(page);
+    handlePage(page);
   };
 
   return (
     <>
+      {contextHolder}
       <Gate />
-      <Navbar />
+      <Navbar isLoading={loading} />
       <div className={styles["main__content"]}>
-        {isLoading ? (
+        {loading ? (
           <Loader />
         ) : (
           <div className={styles["main__table-container"]}>
             <Table
               dataSource={users}
               className={styles["main__table"]}
-              scroll={{ x: true }}
+              scroll={{x: true}}
               columns={columns}
-              onRow={({ login }) => ({
+              onRow={({login}) => ({
                 onClick: rowHandler(login),
               })}
               pagination={false}
             />
             <Pagination
+              showSizeChanger={false}
               className={styles["main__pagination"]}
-              onChange={handlePage}
-              total={1000}
+              onChange={onChangePage}
+              total={Math.min(usersCount, 1000)}
               current={currentPage}
               pageSize={30}
             />

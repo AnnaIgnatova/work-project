@@ -5,8 +5,9 @@ import { Theme } from "../../types/theme";
 import { THEME_KEY } from "../../constants/theme";
 
 export const Header: React.FC = () => {
+  // Local Storage для практики по ИПР
   const [theme, setTheme] = useState<Theme>(
-    (localStorage.getItem(THEME_KEY) as Theme) || Theme.DARK
+    (localStorage.getItem(THEME_KEY) as Theme) || Theme.DARK 
   );
 
   const onChange = () => {
