@@ -3,9 +3,11 @@
 ## Запуск приложения
 1. Склонируйте проект командой `git clone https://github.com/AnnaIgnatova/work-project.git`
 2. Создайте токен для работы GitHub API
+   
    для этого нужно перейти в настройки профиля, далее выбрать Developer Settings -> Personal access tokens -> Fine-grained tokens
    здесь нужно создать токен для дальнейшей работы с GitHub API.
 3. Добавьте токен в проект
+   
    после создания токена, необходимо добавить его в проект `src\api\octokit`
 
    `export const octokit = new Octokit({
