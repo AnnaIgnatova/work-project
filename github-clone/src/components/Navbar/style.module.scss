@@ -1,6 +1,6 @@
 .navbar {
   background: var(--background-color-light);
-  max-width: 250px;
+  max-width: 300px;
   min-height: calc(100vh - 70px);
   padding: 20px;
   transition: all 0.5s;
@@ -30,12 +30,4 @@
 
 :global(.hidden) {
   display: none;
-}
-
-.navbar__container {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  height: 20vh;
-  justify-content: space-between;
 }

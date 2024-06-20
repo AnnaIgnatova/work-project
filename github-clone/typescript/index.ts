@@ -1,3 +1,5 @@
+// Файл относится к учебному матрериалу по TypeScript
+
 // Utility Types
 
 // Partial<Type> - допустимо частичное использование интерфейса
@@ -8,7 +10,7 @@ interface Todo {
 }
 
 function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
-  return { ...todo, ...fieldsToUpdate };
+  return {...todo, ...fieldsToUpdate};
 }
 
 const todo1 = {
@@ -27,9 +29,9 @@ interface Props {
 
 // Required<Type> - обязательное присутствие всех свойств
 
-const obj: Props = { a: 5 };
+const obj: Props = {a: 5};
 
-const obj2: Required<Props> = { a: 5 };
+const obj2: Required<Props> = {a: 5};
 
 // Readonly<Type> - свойства доступны только для чтения
 
@@ -53,9 +55,9 @@ interface CatInfo {
 type CatName = "miffy" | "boris" | "mordred";
 
 const cats: Record<CatName, CatInfo> = {
-  miffy: { age: 10, height: "Persian" },
-  boris: { age: 5, breed: "Maine Coon" },
-  mordred: { age: 16, breed: "British Shorthair" },
+  miffy: {age: 10, height: "Persian"},
+  boris: {age: 5, breed: "Maine Coon"},
+  mordred: {age: 16, breed: "British Shorthair"},
 };
 
 // Pick<Type, Keys> - позволяет выбрать несколько свойств из конкретного типа
@@ -92,12 +94,9 @@ const todo4: TodoPreview4 = {
 
 // Exclude<UnionType, ExcludedMembers> - позволяет исключить свойства из типа
 
-type Shape =
-  | { kind: "circle"; radius: number }
-  | { kind: "square"; x: number }
-  | { kind: "triangle"; x: number; y: number };
+type Shape = {kind: "circle"; radius: number} | {kind: "square"; x: number} | {kind: "triangle"; x: number; y: number};
 
-type T3 = Exclude<Shape, { kind: "circle" }>;
+type T3 = Exclude<Shape, {kind: "circle"}>;
 
 const example: T3 = {
   kind: "square",
@@ -106,12 +105,9 @@ const example: T3 = {
 
 // Extract<Type, Union> - создает тип из пересекаемых типов
 
-type Shape2 =
-  | { kind: "circle"; radius: number }
-  | { kind: "square"; x: number }
-  | { kind: "triangle"; x: number; y: number };
+type Shape2 = {kind: "circle"; radius: number} | {kind: "square"; x: number} | {kind: "triangle"; x: number; y: number};
 
-type T2 = Extract<Shape2, { kind: "circle" }>;
+type T2 = Extract<Shape2, {kind: "circle"}>;
 
 const example2: T2 = {
   kind: "circle",
